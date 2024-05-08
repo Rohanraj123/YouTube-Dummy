@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">YoutubeDemo</string>
+    <string name="app_icon">App Icon</string>
+
+    // TopAppBar
+    <string name="search_icon">Search Icon</string>
+    
+    // HomeScreen
+    <string name="Hot">Hot</string>
+    <string name="Information">Information</string>
+    <string name="funny">funny</string>
+
+</resources>
