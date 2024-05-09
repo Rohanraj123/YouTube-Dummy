@@ -44,7 +44,7 @@ fun HomeScreen(
             onClick = {/* Handle search functionality */}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = { supabaseViewModel.insertSampleVideos() }) {
+        Button(onClick = { /* Handle this shit */ }) {
             Text(text = "Click here to insert")
         }
         Row (
