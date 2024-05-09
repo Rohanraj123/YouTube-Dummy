@@ -3,7 +3,7 @@ package com.example.youtubedemo.data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Video(
+data class videos(
     val id: Int,
     val thumbnail: String,
     val title: String,
@@ -12,3 +12,4 @@ data class Video(
     val video: String,
     val description: String
 )
+

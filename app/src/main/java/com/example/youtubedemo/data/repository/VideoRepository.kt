@@ -1,8 +1,11 @@
 package com.example.youtubedemo.data.repository
 
-import com.example.youtubedemo.data.model.Video
+import com.example.youtubedemo.data.model.videos
+import java.io.File
 
 interface VideoRepository {
-    suspend fun insertVideo(video: Video)
-    suspend fun getVideos(): List<Video>
+    suspend fun retrieveVideoUrl(): List<String>
+    suspend fun retrieveThumbnailUrl(): List<String>
+    suspend fun insertVideo(video: videos)
+    suspend fun getVideos(): List<videos>
 }

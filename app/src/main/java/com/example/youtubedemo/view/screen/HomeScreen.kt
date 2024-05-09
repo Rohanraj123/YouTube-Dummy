@@ -1,5 +1,7 @@
 package com.example.youtubedemo.view.screen
 
+import android.util.Log
+import android.util.Pair
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,12 +14,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -30,11 +37,21 @@ import com.example.youtubedemo.view.components.FlatButton
 import com.example.youtubedemo.view.components.TopAppBar
 import com.example.youtubedemo.view.components.VideoCard
 import com.example.youtubedemo.viewmodel.SupaBaseViewModel
+import java.io.File
 
 @Composable
 fun HomeScreen(
     supabaseViewModel: SupaBaseViewModel
 ) {
+
+
+    val videosState by remember { supabaseViewModel.videos }.collectAsState()
+
+    DisposableEffect(Unit) {
+        supabaseViewModel.getVideos()
+        onDispose { }
+    }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -44,9 +61,6 @@ fun HomeScreen(
             onClick = {/* Handle search functionality */}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = { /* Handle this shit */ }) {
-            Text(text = "Click here to insert")
-        }
         Row (
             modifier = Modifier
                 .fillMaxWidth(),
@@ -70,104 +84,14 @@ fun HomeScreen(
         }
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn {
-            items(1) { index ->
+            items(videosState) { video ->
 
                 VideoCard(
                     channelLogo = painterResource(id = R.drawable.appicon),
                     channelName = "Mr. Beast",
-                    videoTitle = "Survival on island for 100 days without any resources",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Aman Dhattarwal",
-                    videoTitle = "How to clear jee exam in 2 years",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
-                    onClick = {
-                        // Handle card click here (navigate to Display screen)
-                    }
-                )
-                VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = "Video Title $index",
-                    thumbnail = painterResource(id = R.drawable.ic_launcher_background),
-                    numberOfViews = 1000,
+                    videoTitle = video.title,
+                    thumbnail = video.thumbnail,
+                    numberOfViews = video.views,
                     onClick = {
                         // Handle card click here (navigate to Display screen)
                     }
@@ -176,3 +100,5 @@ fun HomeScreen(
         }
     }
 }
+
+

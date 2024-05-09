@@ -1,5 +1,6 @@
 package com.example.youtubedemo.view.components
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,13 +25,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
 fun VideoCard(
     channelLogo: Painter,
     channelName: String,
     videoTitle: String,
-    thumbnail: Painter,
+    thumbnail: String,
     numberOfViews: Int,
     onClick: () -> Unit
 ) {
@@ -63,8 +65,8 @@ fun VideoCard(
             Spacer(modifier = Modifier.height(4.dp))
 
             // Video thumbnail
-            Image(
-                painter = thumbnail,
+            AsyncImage(
+                model = thumbnail,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
