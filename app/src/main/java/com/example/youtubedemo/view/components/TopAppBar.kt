@@ -23,7 +23,6 @@ import com.example.youtubedemo.R
 
 @Composable
 fun TopAppBar(
-    onClick: () -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -45,14 +44,6 @@ fun TopAppBar(
                 .padding(10.dp),
             fontSize = 30.sp
         )
-        IconButton(onClick = { onClick() }) {
-            Icon(
-                Icons.Default.Search,
-                contentDescription = stringResource(id = R.string.search_icon),
-                tint = Color.White,
-                modifier = Modifier
-                    .padding(10.dp)
-            )
-        }
+
     }
 }

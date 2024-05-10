@@ -1,5 +1,4 @@
 package com.example.youtubedemo.view.screen
-
 import android.util.Log
 import android.util.Pair
 import androidx.compose.foundation.background
@@ -24,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -33,7 +34,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.cookbook.presentation.view.HomeScreen.CustomSearchBar
 import com.example.youtubedemo.R
+import com.example.youtubedemo.data.model.videos
 import com.example.youtubedemo.view.components.FlatButton
 import com.example.youtubedemo.view.components.TopAppBar
 import com.example.youtubedemo.view.components.VideoCard
@@ -47,29 +50,38 @@ fun HomeScreen(
     supabaseViewModel: SupaBaseViewModel,
     navController: NavHostController
 ) {
-
-
     val videosState by remember { supabaseViewModel.videos }.collectAsState()
+
+    var filteredVideos by remember { mutableStateOf(emptyList<videos>()) }
 
     DisposableEffect(Unit) {
         supabaseViewModel.getVideos()
         onDispose { }
     }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        TopAppBar(
-            onClick = {/* Handle search functionality */}
+        TopAppBar()
+        Spacer(modifier = Modifier.height(20.dp))
+        CustomSearchBar(
+            onSearchTextChanged = { searchText ->
+                filteredVideos = if (searchText.isEmpty()) {
+                    emptyList()
+                } else {
+                    videosState.filter { video ->
+                        video.title.contains(searchText, ignoreCase = true)
+                    }
+                }
+            }
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Row (
-            modifier = Modifier
-                .fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             FlatButton(
                 title = stringResource(id = R.string.Hot),
                 isSelected = true,
@@ -88,14 +100,13 @@ fun HomeScreen(
         }
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn {
-            items(videosState) { video ->
+            items(if (filteredVideos.isNotEmpty()) filteredVideos else videosState) { video ->
                 val encodeUrl = URLEncoder.encode(video.video, StandardCharsets.UTF_8.toString())
 
                 Log.d("HomeScreen", "video url : ${video.video}")
                 VideoCard(
                     video,
                     onClick = {
-
                         navController.navigate("display_screen/${encodeUrl}")
                         Log.d("HomeScreen", "Navigation started with video : $video")
                     }
@@ -104,5 +115,3 @@ fun HomeScreen(
         }
     }
 }
-
-
