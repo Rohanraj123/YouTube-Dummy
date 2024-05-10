@@ -1,6 +1,5 @@
-package com.example.cookbook.presentation.view.HomeScreen
+package com.example.youtubedemo.view.components
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 fun CustomSearchBar(
     onSearchTextChanged: (String) -> Unit
 ) {
-    val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     var searchText by remember { mutableStateOf("") }
@@ -44,7 +43,7 @@ fun CustomSearchBar(
             .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(16.dp))
             .clickable {
             },
-        contentAlignment = Alignment.CenterStart
+        contentAlignment = Alignment.CenterStart,
     ) {
 
         OutlinedTextField(
@@ -61,7 +60,10 @@ fun CustomSearchBar(
                 )
             },
             placeholder = {
-                Text(text = "Search")
+                Text(
+                    text = "Search",
+                    color = Color.White
+                )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
