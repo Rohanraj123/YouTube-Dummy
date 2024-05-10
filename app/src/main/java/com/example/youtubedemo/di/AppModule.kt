@@ -10,10 +10,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.gotrue.SessionSource
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.storage.Storage
-import io.ktor.client.plugins.cache.storage.FileStorage
 import javax.inject.Singleton
 
 private var SUPA_BASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4dW52dWx5eW9yZGppZ3FvYWhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ5NjE3ODQsImV4cCI6MjAzMDUzNzc4NH0.AJtFf_HNUO91m7yy-IGTM-8JicccUWAs1Y2vNqnwhoY"

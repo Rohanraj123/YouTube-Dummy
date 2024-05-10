@@ -112,7 +112,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.3.3"))
 
-
+    // Picasso
     implementation("com.squareup.picasso:picasso:2.8")
 
 

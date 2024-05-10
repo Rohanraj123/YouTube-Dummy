@@ -71,7 +71,7 @@ fun VideoCard(
                 text = video.title.removeSurrounding("\""),
                 fontSize = 18.sp,
                 maxLines = 2,
-                color = Color.White
+                color = Color.Black
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -79,7 +79,7 @@ fun VideoCard(
             Text(
                 text = "Views: ${video.views}",
                 fontSize = 14.sp,
-                color = Color.White
+                color = Color.Black
             )
         }
         Icon(

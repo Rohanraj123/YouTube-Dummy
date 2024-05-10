@@ -1,4 +1,5 @@
 package com.example.youtubedemo.view.screen
+
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -53,7 +54,7 @@ fun HomeScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black),
+                .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(color = Color.White)
@@ -62,7 +63,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black)
+                .background(Color.White)
         ) {
             TopAppBar()
             Spacer(modifier = Modifier.height(20.dp))
@@ -102,12 +103,16 @@ fun HomeScreen(
             LazyColumn {
                 items(if (filteredVideos.isNotEmpty()) filteredVideos else videosState) { video ->
                     val encodeUrl = URLEncoder.encode(video.video, StandardCharsets.UTF_8.toString())
+                    val encodeViews = URLEncoder.encode(video.views.toString(), StandardCharsets.UTF_8.toString())
+                    val encodeDescription = URLEncoder.encode(video.description, StandardCharsets.UTF_8.toString())
+                    val encodeTitle = URLEncoder.encode(video.title, StandardCharsets.UTF_8.toString())
+                    val encodeLikes = URLEncoder.encode(video.likes.toString(), StandardCharsets.UTF_8.toString())
 
                     Log.d("HomeScreen", "video url : ${video.video}")
                     VideoCard(
                         video,
                         onClick = {
-                            navController.navigate("display_screen/${encodeUrl}")
+                            navController.navigate("display_screen/${encodeUrl}/${encodeViews}/${encodeDescription}/${encodeTitle}/${encodeLikes}")
                             Log.d("HomeScreen", "Navigation started with video : $video")
                         }
                     )
