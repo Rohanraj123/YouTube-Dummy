@@ -32,16 +32,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.youtubedemo.R
 import com.example.youtubedemo.view.components.FlatButton
 import com.example.youtubedemo.view.components.TopAppBar
 import com.example.youtubedemo.view.components.VideoCard
 import com.example.youtubedemo.viewmodel.SupaBaseViewModel
 import java.io.File
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun HomeScreen(
-    supabaseViewModel: SupaBaseViewModel
+    supabaseViewModel: SupaBaseViewModel,
+    navController: NavHostController
 ) {
 
 
@@ -85,15 +89,15 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn {
             items(videosState) { video ->
+                val encodeUrl = URLEncoder.encode(video.video, StandardCharsets.UTF_8.toString())
 
+                Log.d("HomeScreen", "video url : ${video.video}")
                 VideoCard(
-                    channelLogo = painterResource(id = R.drawable.appicon),
-                    channelName = "Mr. Beast",
-                    videoTitle = video.title,
-                    thumbnail = video.thumbnail,
-                    numberOfViews = video.views,
+                    video,
                     onClick = {
-                        // Handle card click here (navigate to Display screen)
+
+                        navController.navigate("display_screen/${encodeUrl}")
+                        Log.d("HomeScreen", "Navigation started with video : $video")
                     }
                 )
             }

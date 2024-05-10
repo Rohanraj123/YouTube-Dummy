@@ -7,10 +7,13 @@ import com.example.youtubedemo.data.model.videos
 import com.example.youtubedemo.data.repository.VideoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
@@ -22,51 +25,6 @@ class SupaBaseViewModel @Inject constructor(
 
     private val _videos = MutableStateFlow<List<videos>>(emptyList())
     val videos = _videos.asStateFlow()
-
-
-    fun retrieveVideoThumbnailPairUri() {
-        viewModelScope.launch {
-            val videoUrls = videoRepository.retrieveVideoUrl()
-            Log.d("ViewModel", "videoUrls : ${videoUrls.size}")
-            val thumbnailUrls = videoRepository.retrieveThumbnailUrl()
-            Log.d("ViewModel", "thumbnailUrl : ${thumbnailUrls.size}")
-
-            if (videoUrls.size != thumbnailUrls.size) {
-                return@launch
-            }
-
-            val ids = getIds()
-            val titles = getTitles()
-            val likes = getLikes()
-            val views = getViews()
-            val descriptions = getDescriptions()
-
-            for (i in videoUrls.indices) {
-                val videoUrl = videoUrls[i]
-                val thumbnailUrl = thumbnailUrls[i]
-                val id = ids[i]
-                val title = titles[i]
-                val like = likes[i]
-                val view = views[i]
-                val description = descriptions[i]
-
-                val video = videos(
-                    id,
-                    thumbnailUrl,
-                    title,
-                    like,
-                    view,
-                    videoUrl,
-                    description
-                )
-
-                insertVideo(video)
-                Log.d("ViewModel", "insertVideo is called with  : $video")
-            }
-
-        }
-    }
-
 
     fun insertVideo(video: videos) {
         viewModelScope.launch {

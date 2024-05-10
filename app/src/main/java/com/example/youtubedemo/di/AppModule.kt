@@ -29,7 +29,8 @@ class AppModule {
     fun provideSupabaseClient(context: Context): SupabaseClient {
         return createSupabaseClient(
             supabaseKey = SUPA_BASE_KEY,
-            supabaseUrl = SUPA_BASE_URL
+            supabaseUrl = SUPA_BASE_URL,
+
         ) {
             install(Postgrest)
             install(Storage)

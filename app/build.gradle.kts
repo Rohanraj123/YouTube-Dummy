@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -100,8 +102,8 @@ dependencies {
 
 
     // Video Player
-    implementation("androidx.media3:media3-exoplayer:1.3.1")
-    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
 
     //Retrofit :
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -109,6 +111,10 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.3.3"))
+
+
+    implementation("com.squareup.picasso:picasso:2.8")
+
 
 }
 kapt {

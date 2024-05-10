@@ -7,6 +7,7 @@ import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.storage.storage
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.json.JSONArray
 
 class VideRepositoryImpl(
     private val supabaseClient: SupabaseClient
@@ -56,17 +57,18 @@ class VideRepositoryImpl(
             val result = supabaseClient.from("videos").select()
             val responseBody = result.data
             responseBody.let {
-                val jsonString = it.toString()
-                val jsonArray = Json.decodeFromString<List<Map<String, String>>>(jsonString)
+                val jsonString = it
+                val jsonArray = JSONArray(jsonString)
                 val videoList = mutableListOf<videos>()
-                for (jsonMap in jsonArray) {
-                    val id = (jsonMap["id"] as? Int) ?: 0 // Cast id to Int
-                    val thumbnail = jsonMap["thumbnail"] ?: ""
-                    val title = jsonMap["title"] ?: ""
-                    val likes = (jsonMap["likes"] as? Int) ?: 0
-                    val views = (jsonMap["views"] as? Int) ?: 0
-                    val video = jsonMap["video"] ?: ""
-                    val description = jsonMap["description"] ?: ""
+                for (i in 0 until jsonArray.length()) {
+                    val jsonMap = jsonArray.getJSONObject(i)
+                    val id = jsonMap.getInt("id")
+                    val thumbnail = jsonMap.getString("thumbnail")
+                    val title = jsonMap.getString("title")
+                    val likes = jsonMap.getInt("likes")
+                    val views = jsonMap.getInt("views")
+                    val video = jsonMap.getString("video")
+                    val description = jsonMap.getString("description")
                     val videoObj = videos(id, thumbnail, title, likes, views, video, description)
                     videoList.add(videoObj)
                 }
